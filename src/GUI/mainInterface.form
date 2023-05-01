@@ -7,74 +7,11 @@
     <properties/>
     <border type="none"/>
     <children>
-      <tabbedpane id="d2057" binding="tabbedPane1" default-binding="true">
+      <tabbedpane id="d2057" binding="tabbedPane">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>
-        <children>
-          <grid id="111" layout-manager="BorderLayout" hgap="0" vgap="0">
-            <constraints>
-              <tabbedpane title="Gauss / Crammer"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="ae957" class="javax.swing.JLabel">
-                <constraints border-constraint="North"/>
-                <properties>
-                  <text value="btw, i hate ENSAM!"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-          <grid id="675d9" layout-manager="BorderLayout" hgap="0" vgap="0">
-            <constraints>
-              <tabbedpane title="Jacobi / Gauss siedle"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="82342" class="javax.swing.JLabel">
-                <constraints border-constraint="North"/>
-                <properties>
-                  <text value="btw, i hate ta dak trame!"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-          <grid id="831d2" layout-manager="BorderLayout" hgap="0" vgap="0">
-            <constraints>
-              <tabbedpane title="LU / LLt"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children/>
-          </grid>
-          <grid id="895f7" layout-manager="BorderLayout" hgap="0" vgap="0">
-            <constraints>
-              <tabbedpane title="NewtonRaphson Method"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children/>
-          </grid>
-          <grid id="c917e" layout-manager="BorderLayout" hgap="0" vgap="0">
-            <constraints>
-              <tabbedpane title="Bisection / Sécant"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children/>
-          </grid>
-          <grid id="d905b" layout-manager="BorderLayout" hgap="0" vgap="0">
-            <constraints>
-              <tabbedpane title="Divided differences"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children/>
-          </grid>
-        </children>
+        <children/>
       </tabbedpane>
     </children>
   </grid>
