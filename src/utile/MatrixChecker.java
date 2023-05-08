@@ -1,4 +1,4 @@
-package IterativeMethods;
+package utile;
 
 public class MatrixChecker {
 
