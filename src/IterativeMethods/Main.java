@@ -1,6 +1,7 @@
 package IterativeMethods;
 import java.util.Scanner;
-
+import utile.MatrixChecker;
+import utile.MatrixPreconditioner;
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
