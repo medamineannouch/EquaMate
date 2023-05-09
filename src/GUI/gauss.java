@@ -1,10 +1,8 @@
 package GUI;
 
-import GUI.Componenets.matrix;
 import GUI.Componenets.matrixInput;
 import GUI.Componenets.solutionHeader;
 import Methods.linearSystems.gaussianElimination;
-import Methods.linearSystems.luDecomposition;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -12,20 +10,18 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
-public class luLlt extends JPanel
+public class gauss extends JPanel
 {
-    public GUI.Componenets.matrixInput matrixInput;
+    public matrixInput matrixInput;
     public JPanel matricesContainer; //a wrapper for the above component, used to preserve the old place
     public solutionHeader solutionMatrix;
     public JPanel solutionPanel;
-    public matrix L, U;
-    public JPanel lPanel, uPanel;
+    public JComboBox<String> method;
 
-    public luLlt()
+    public gauss()
     {
-        luLlt app = this; //pointer for listeners
+        gauss app = this; //pointer for listeners
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -66,43 +62,26 @@ public class luLlt extends JPanel
         solutionPanel.add(solutionMatrix);
         this.add(solutionPanel);
 
+        //method chooser
+        JPanel methodList = new JPanel(new FlowLayout());
+        methodList.setPreferredSize(new Dimension(0, 30));
+        methodList.add(new JLabel("Method: "));
+
+        String[] methods = {"Gauss", "Crammer"};
+        method = new JComboBox<>(methods);
+        methodList.add(method, BorderLayout.CENTER);
 
         //solve btn
-        JPanel pnl = new JPanel(new FlowLayout());
         JButton solveBtn = new JButton("Solve");
-        pnl.add(solveBtn);
+        methodList.add(solveBtn);
 
-        this.add(pnl);
+        this.add(methodList);
         solveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 solve();
             }
         });
-
-        //L & U matrices
-        //panel wrapper
-        JPanel luPanel = new JPanel();
-        luPanel.setLayout(new BoxLayout(luPanel, BoxLayout.X_AXIS));
-        luPanel.add(new JLabel("L: "));
-
-        lPanel = new JPanel();
-        lPanel.setLayout(new BoxLayout(lPanel, BoxLayout.X_AXIS));
-        L = new matrix(2, 2);
-        lPanel.add(L);
-        luPanel.add(lPanel);
-
-        luPanel.add(new JLabel("U: "));
-
-        uPanel = new JPanel();
-        uPanel.setLayout(new BoxLayout(uPanel, BoxLayout.X_AXIS));
-        U = new matrix(2, 2);
-        uPanel.add(U);
-        luPanel.add(uPanel);
-
-        this.add(luPanel);
-        luPanel.setPreferredSize(new Dimension(100, 150));
-
     }
 
     public void redraw(int newDim)
@@ -115,15 +94,6 @@ public class luLlt extends JPanel
         solutionMatrix = new solutionHeader(newDim);
         solutionPanel.add(solutionMatrix);
 
-
-        lPanel.remove(L);
-        L = new matrix(newDim, newDim);
-        lPanel.add(L);
-
-        uPanel.remove(U);
-        U = new matrix(newDim, newDim);
-        uPanel.add(U);
-
         this.updateUI();
     }
 
@@ -131,12 +101,15 @@ public class luLlt extends JPanel
     {
         try
         {
-            HashMap<String, Object> res = luDecomposition.LU(matrixInput.getA(), matrixInput.getB());
-            solutionMatrix.setValues((double[]) res.get("result"));
-
-            //set L and U
-            L.fillMatrix((double[][]) res.get("L"));
-            U.fillMatrix((double[][]) res.get("U"));
+            if(((String)method.getSelectedItem()).equals("Gauss"))
+            {
+                double[] res = gaussianElimination.gaussianEliminationMathod(matrixInput.getA(), matrixInput.getB());
+                solutionMatrix.setValues(res);
+            }
+            else
+            {
+                System.out.println("crammer");
+            }
         }
         catch(Exception e)
         {
@@ -144,3 +117,4 @@ public class luLlt extends JPanel
         }
     }
 }
+
