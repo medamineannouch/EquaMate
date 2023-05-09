@@ -1,0 +1,29 @@
+package NonlinearEquations;
+
+import java.util.function.Function;
+public class SecantMethod {
+    public static double solve(Function<Double, Double> f, double x0, double x1, double epsilon, int maxIterations) {
+        double fx0 = f.apply(x0);
+        double fx1 = f.apply(x1);
+        double x = 0;
+        double fx=0;
+        int iteration = 0;
+        double error = Double.POSITIVE_INFINITY;
+        while (iteration < maxIterations && error > epsilon) {
+            x = x1 - fx1 * (x1 - x0) / (fx1 - fx0);
+            fx = f.apply(x);
+            error = Math.abs(x - x1);
+            x0 = x1;
+            fx0 = fx1;
+            x1 = x;
+            fx1 = fx;
+            iteration++;
+        }
+
+        if (iteration >= maxIterations) {
+            System.out.println("Maximum number of iterations reached.");
+        }
+
+        return x;
+    }
+}
