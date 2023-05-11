@@ -1,5 +1,7 @@
 package Methods.linearSystems;
 
+import Methods.utilities.matrixUtilities;
+
 import java.util.HashMap;
 
 public class luDecomposition
@@ -28,13 +30,13 @@ public class luDecomposition
         // construct U & L
         for (int column = 0; column < A.length; column++) {
             for (int line = column + 1; line < A.length; line++) {
-                L[line][column] = -1 * MatrixUtilities.eliminateEntry(U, null, line, column);
+                L[line][column] = -1 * matrixUtilities.MatrixUtilities.eliminateEntry(U, null, line, column);
             }
         }
 
-        double[] c = MatrixUtilities.backSolveReversed(L, B);
+        double[] c = matrixUtilities.MatrixUtilities.backSolveReversed(L, B);
 
-        double[] result =  MatrixUtilities.backSolve(U, c);
+        double[] result =  matrixUtilities.MatrixUtilities.backSolve(U, c);
         HashMap<String , Object> res = new HashMap<>();
         res.put("result", result);
         res.put("L", L);

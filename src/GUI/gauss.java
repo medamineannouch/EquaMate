@@ -1,6 +1,6 @@
 package GUI;
 
-import GUI.Componenets.matrixInput;
+import GUI.Componenets.matricesInput;
 import GUI.Componenets.solutionHeader;
 import Methods.linearSystems.gaussianElimination;
 
@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 
 public class gauss extends JPanel
 {
-    public matrixInput matrixInput;
+    public matricesInput matricesInput;
     public JPanel matricesContainer; //a wrapper for the above component, used to preserve the old place
     public solutionHeader solutionMatrix;
     public JPanel solutionPanel;
@@ -28,9 +28,9 @@ public class gauss extends JPanel
         matricesContainer = new JPanel();
         matricesContainer.setPreferredSize(new Dimension(0, 200)); //prevents size change while redrawing
         matricesContainer.setLayout(new BoxLayout(matricesContainer, BoxLayout.X_AXIS));
-        matrixInput = new matrixInput(2);
+        matricesInput = new matricesInput(2);
 
-        matricesContainer.add(matrixInput);
+        matricesContainer.add(matricesInput);
 
         this.add(matricesContainer);
 
@@ -58,7 +58,7 @@ public class gauss extends JPanel
         //solution matrix
         solutionPanel = new JPanel(); //wrapper
         solutionPanel.setLayout(new FlowLayout());
-        solutionMatrix = new solutionHeader(2);
+        solutionMatrix = new solutionHeader(2, false, "Solution : ");
         solutionPanel.add(solutionMatrix);
         this.add(solutionPanel);
 
@@ -86,12 +86,12 @@ public class gauss extends JPanel
 
     public void redraw(int newDim)
     {
-        matricesContainer.remove(matrixInput);
-        matrixInput = new matrixInput(newDim);
-        matricesContainer.add(matrixInput);
+        matricesContainer.remove(matricesInput);
+        matricesInput = new matricesInput(newDim);
+        matricesContainer.add(matricesInput);
 
         solutionPanel.remove(solutionMatrix);
-        solutionMatrix = new solutionHeader(newDim);
+        solutionMatrix = new solutionHeader(newDim, false, "Solution : ");
         solutionPanel.add(solutionMatrix);
 
         this.updateUI();
@@ -103,7 +103,7 @@ public class gauss extends JPanel
         {
             if(((String)method.getSelectedItem()).equals("Gauss"))
             {
-                double[] res = gaussianElimination.gaussianEliminationMathod(matrixInput.getA(), matrixInput.getB());
+                double[] res = gaussianElimination.gaussianEliminationMathod(matricesInput.getA(), matricesInput.getB());
                 solutionMatrix.setValues(res);
             }
             else

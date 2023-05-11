@@ -3,7 +3,7 @@ package GUI.Componenets;
 import javax.swing.*;
 import java.awt.*;
 
-public class matrixInput extends JPanel
+public class matricesInput extends JPanel
 {
     //dimensions for both matrices
     public int dimension;
@@ -11,7 +11,7 @@ public class matrixInput extends JPanel
     public JTextField[][] A;
     public JTextField[] B;
 
-    public matrixInput(int dimension)
+    public matricesInput(int dimension)
     {
         this.dimension = dimension;
         this.A = new JTextField[dimension][dimension];
