@@ -39,14 +39,8 @@ public class fixedPoint
     }
 
     public static void main(String[] args) {
-
         try
         {
-//            //test 1 equation
-//            function_def g = x -> Math.log(2 + x[0]);
-//            System.out.println(fixedPointIteration(g, 0.1, 6, 0.005));
-
-            //test a system of 2 equations
             Expression g1 = new ExpressionBuilder("-0.02 * x1^2 - 0.02 * x2^2 - 0.02 * x3^2 + 4")
                     .variables("x1", "x2", "x3")
                     .build();
