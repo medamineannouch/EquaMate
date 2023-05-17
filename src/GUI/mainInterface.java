@@ -1,5 +1,6 @@
 package GUI;
 
+import GUI.Componenets.*;
 import javax.swing.*;
 import java.awt.*;
 
@@ -25,11 +26,15 @@ public class mainInterface extends JFrame
         //fourth tab
         JPanel tab4 = new newtonRaphson();
 
+        //fifth tab
+        JPanel tab5 = new secant();
+
         //add tabes into the tabbed pane
         tabbedPane.addTab("Gauss/Crammer", tab2);
         tabbedPane.addTab("LU/LLT", tab1);
         tabbedPane.addTab("Fixed Point", tab3);
         tabbedPane.addTab("Newton Raphson", tab4);
+        tabbedPane.addTab("Sécante", tab5);
 
         this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
         this.setBounds(200, 50, 900 , 600);
