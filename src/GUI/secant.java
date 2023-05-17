@@ -1,7 +1,7 @@
-package GUI.Componenets;
+package GUI;
 
 
-import GUI.Componenets.solutionHeader;
+import GUI.Componenets.*;
 import net.objecthunter.exp4j.Expression;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -61,12 +61,12 @@ public class secant extends JPanel
         // Add a change listener to the spinner to print the selected value
         spinner.addChangeListener(
                 new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                //redraw matrix input
-                app.redraw((Integer)spinner.getValue());
-            }
-        });
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        //redraw matrix input
+                        app.redraw((Integer)spinner.getValue());
+                    }
+                });
         dimensionsChooser.add(new JLabel("Dimension : "));
         dimensionsChooser.add(spinner);
 
