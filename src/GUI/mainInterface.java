@@ -1,6 +1,8 @@
 package GUI;
 
 import GUI.Componenets.*;
+import NonlinearEquations.BroydenMethod;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -29,12 +31,16 @@ public class mainInterface extends JFrame
         //fifth tab
         JPanel tab5 = new secant();
 
+        //sixth tab
+        JPanel tab6= new Broyden();
+
         //add tabes into the tabbed pane
         tabbedPane.addTab("Gauss/Crammer", tab2);
         tabbedPane.addTab("LU/LLT", tab1);
         tabbedPane.addTab("Fixed Point", tab3);
         tabbedPane.addTab("Newton Raphson", tab4);
         tabbedPane.addTab("Sécante", tab5);
+        tabbedPane.addTab("Broyden", tab6);
 
         this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
         this.setBounds(200, 50, 900 , 600);
