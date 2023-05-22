@@ -10,7 +10,7 @@ public class mainInterface extends JFrame
 {
     public mainInterface()
     {
-        this.setTitle("Analyse numeerique!");
+        this.setTitle("EquaMate");
         this.setBounds(200, 200, 500, 200);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -45,6 +45,7 @@ public class mainInterface extends JFrame
         tabbedPane.addTab("Sécante", tab5);
         tabbedPane.addTab("Broyden", tab6);
         tabbedPane.addTab("Jacobi/Gauss-Seidel", tab7);
+
 
         this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
         this.setBounds(200, 50, 900 , 600);
