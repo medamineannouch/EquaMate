@@ -40,11 +40,11 @@ public class mainInterface extends JFrame
         //add tabes into the tabbed pane
         tabbedPane.addTab("Gauss/Crammer", tab2);
         tabbedPane.addTab("LU/LLT", tab1);
+        tabbedPane.addTab("Jacobi/Gauss-Seidel", tab7);
         tabbedPane.addTab("Fixed Point", tab3);
         tabbedPane.addTab("Newton Raphson", tab4);
         tabbedPane.addTab("Sécante", tab5);
         tabbedPane.addTab("Broyden", tab6);
-        tabbedPane.addTab("Jacobi/Gauss-Seidel", tab7);
 
 
         this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
