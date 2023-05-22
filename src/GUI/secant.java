@@ -19,9 +19,13 @@ public class secant extends JPanel
     public JPanel equationsPanel;
 
 
-    public solutionHeader initialSolutionHeader;
-    public JPanel solutionHeaderPanel;
+    public solutionHeader initialSolutionHeader1;
+    public solutionHeader initialSolutionHeader2;
+    public JPanel solutionHeaderPanel1;
+    public JPanel solutionHeaderPanel2;
+
     public JSpinner iterations;
+    public JTextField error;
 
     public solutionHeader solution;
     public JPanel solutionPanel;
@@ -37,10 +41,16 @@ public class secant extends JPanel
         equationsInput = new equationsInput(1);
 
 
-        solutionHeaderPanel = new JPanel();
-        solutionHeaderPanel.setLayout(new BoxLayout(solutionHeaderPanel, BoxLayout.X_AXIS));
-        initialSolutionHeader = new solutionHeader(2, true, "Initial solutions: ");
-        solutionHeaderPanel.add(initialSolutionHeader);
+        solutionHeaderPanel1 = new JPanel();
+        solutionHeaderPanel1.setLayout(new BoxLayout(solutionHeaderPanel1, BoxLayout.X_AXIS));
+        initialSolutionHeader1 = new solutionHeader(1, true, "Initial solutions 1 : ");
+        solutionHeaderPanel1.add(initialSolutionHeader1);
+
+
+        solutionHeaderPanel2 = new JPanel();
+        solutionHeaderPanel2.setLayout(new BoxLayout(solutionHeaderPanel2, BoxLayout.X_AXIS));
+        initialSolutionHeader2 = new solutionHeader(1, true, "Initial solutions 2 : ");
+        solutionHeaderPanel2.add(initialSolutionHeader2);
 
         solutionPanel = new JPanel();
         solutionPanel.setLayout(new BoxLayout(solutionPanel, BoxLayout.X_AXIS));
@@ -79,6 +89,13 @@ public class secant extends JPanel
         iterationsPanel.add(iterations);
 
 
+        //error
+        JPanel errorPanel = new JPanel(new FlowLayout());
+        errorPanel.add(new JLabel("Error : "));
+        error = new JTextField();
+        errorPanel.add(error);
+        error.setPreferredSize(new Dimension(150, 25));
+
         //solve button
         JButton solve = new JButton("Solve");
         solve.addActionListener(new ActionListener() {
@@ -90,9 +107,12 @@ public class secant extends JPanel
 
         this.add(equationsPanel);
         this.add(dimensionsChooser);
-        this.add(solutionHeaderPanel);
+        this.add(solutionHeaderPanel1);
+        this.add(solutionHeaderPanel2);
 
         this.add(iterationsPanel);
+        this.add(errorPanel);
+
         this.add(solutionPanel);
         this.add(solve);
     }
@@ -103,9 +123,13 @@ public class secant extends JPanel
         this.equationsInput = new equationsInput(newDimensions);
         this.equationsPanel.add(this.equationsInput);
 
-        solutionHeaderPanel.remove(initialSolutionHeader);
-        //initialSolutionHeader = new solutionHeader(newDimensions, true, "Initial solutions : ");
-        solutionHeaderPanel.add(initialSolutionHeader);
+        solutionHeaderPanel1.remove(initialSolutionHeader1);
+        initialSolutionHeader1 = new solutionHeader(newDimensions, true, "Initial solutions 1 : ");
+        solutionHeaderPanel1.add(initialSolutionHeader1);
+
+        solutionHeaderPanel2.remove(initialSolutionHeader2);
+        initialSolutionHeader2 = new solutionHeader(newDimensions, true, "Initial solutions 2 : ");
+        solutionHeaderPanel2.add(initialSolutionHeader2);
 
         solutionPanel.remove(solution);
         solution = new solutionHeader(newDimensions, false, "Solution : ");
@@ -117,18 +141,24 @@ public class secant extends JPanel
     {
         //TODO: check all fields are filled
         Expression[] expressions;
-        double[] initialGuess;
+        double[] initialGuess1;
+        double[] initialGuess2;
+
+        double error;
+
         int iterations;
         try
         {
             expressions = equationsInput.parseExpressions();
-            initialGuess = initialSolutionHeader.getValues();
+            initialGuess1 = initialSolutionHeader1.getValues();
+            initialGuess2 = initialSolutionHeader2.getValues();
 
+            error = Double.parseDouble(this.error.getText());
             iterations = (int) this.iterations.getValue();
             try
             {
-                SecantMethod secantMethod = new SecantMethod(expressions);
-                double[] solution = secantMethod.solve(initialGuess[0], initialGuess[1], iterations);
+                SecantMethod secantMethod = new SecantMethod(expressions, error, iterations);
+                double[] solution = secantMethod.solveSystem(initialGuess1, initialGuess2);
                 this.solution.setValues(solution);
             }
             catch(Exception e)
