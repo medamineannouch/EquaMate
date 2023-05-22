@@ -34,6 +34,9 @@ public class mainInterface extends JFrame
         //sixth tab
         JPanel tab6= new Broyden();
 
+        //seventh tab
+        JPanel tab7= new JacobiGaussSeidel();
+
         //add tabes into the tabbed pane
         tabbedPane.addTab("Gauss/Crammer", tab2);
         tabbedPane.addTab("LU/LLT", tab1);
@@ -41,6 +44,7 @@ public class mainInterface extends JFrame
         tabbedPane.addTab("Newton Raphson", tab4);
         tabbedPane.addTab("Sécante", tab5);
         tabbedPane.addTab("Broyden", tab6);
+        tabbedPane.addTab("Jacobi/Gauss-Seidel", tab7);
 
         this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
         this.setBounds(200, 50, 900 , 600);
