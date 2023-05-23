@@ -34,37 +34,53 @@ public class SecantMethod {
 
 
 public class SecantMethod {
-    private static final double EPSILON = 1e-6; // Error tolerance
+        private final double epsilon; // Convergence criterion
+        private final int maxIterations; // Maximum number of iterations
+        private final Expression[] equations; // Array to store the system of equations
 
-    private Expression[] equations; // Array to store the system of equations
+        public SecantMethod(Expression[] equations, double epsilon, int maxIterations) {
+            this.equations = equations;
+            this.epsilon = epsilon;
+            this.maxIterations = maxIterations;
+        }
 
-    public SecantMethod(Expression[] equations) {
-        this.equations = equations;
-    }
-
-    public double[] solve(double x0, double x1, int iterations) {
-        double[] results = new double[equations.length];
-
-        for (int i = 0; i < iterations; i++) {
-            double fx0 = evaluateEquations(x0);
-            double fx1 = evaluateEquations(x1);
-
-            if (Math.abs(fx1 - fx0) < EPSILON) {
-                break; // Convergence achieved
+        public double[] solveSystem(double[] initialGuess1, double[] initialGuess2) {
+            int n = equations.length;
+            if (initialGuess1.length != n || initialGuess2.length != n) {
+                throw new IllegalArgumentException("Dimensions of initial guess vectors must match the number of equations.");
             }
 
-            double x2 = x1 - ((fx1 * (x1 - x0)) / (fx1 - fx0));
+            double[] x = initialGuess1.clone();
+            double[] xPrev = initialGuess2.clone();
 
-            x0 = x1;
-            x1 = x2;
+            for (int i = 0; i < maxIterations; i++) {
+                double[] dx = new double[n];
+                double[] xNext = x.clone();
+
+                for (int j = 0; j < n; j++) {
+                    Expression equation = equations[j].setVariable("x", x[j]).setVariable("xPrev", xPrev[j]);
+                    dx[j] = equation.evaluate();
+                    xNext[j] = x[j] - dx[j];
+                }
+
+                double maxDeltaX = Math.abs(dx[0]);
+                for (int j = 1; j < n; j++) {
+                    if (Math.abs(dx[j]) > maxDeltaX) {
+                        maxDeltaX = Math.abs(dx[j]);
+                    }
+                }
+
+                if (maxDeltaX < epsilon) {
+                    return xNext;
+                }
+
+                xPrev = x;
+                x = xNext;
+            }
+
+            throw new IllegalStateException("The method did not converge within the maximum number of iterations.");
         }
 
-        for (int i = 0; i < equations.length; i++) {
-            results[i] = equations[i].setVariable("x", x1).evaluate();
-        }
-
-        return results;
-    }
 
     private double evaluateEquations(double x) {
         double result = 0;
@@ -76,41 +92,7 @@ public class SecantMethod {
 
         return result;
     }
-    //test
-    /* public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter the number of equations in the system: ");
-        int numEquations = scanner.nextInt();
-
-        Expression[] equations = new Expression[numEquations];
-
-        System.out.println("Enter the equations in the form of 'f(x) = 0':");
-        for (int i = 0; i < numEquations; i++) {
-            System.out.print("Equation " + (i + 1) + ": ");
-            String equation = scanner.next();
-            equations[i] = new ExpressionBuilder(equation).variable("x").build();
-        }
-
-        System.out.print("Enter the initial guess x0: ");
-        double x0 = scanner.nextDouble();
-
-        System.out.print("Enter the initial guess x1: ");
-        double x1 = scanner.nextDouble();
-
-        System.out.print("Enter the number of iterations: ");
-        int iterations = scanner.nextInt();
-
-        System.out.print("Enter the error tolerance: ");
-        double error = scanner.nextDouble();
-
-        SecantMethod secantMethod = new SecantMethod(equations);
-        double[] results = secantMethod.solve(x0, x1, iterations);
-
-        System.out.println("Solution:");
-        for (int i = 0; i < results.length; i++) {
-            System.out.println("x" + i + " = " + results[i]);
-        }
-    }*/
 }
+
+
 
