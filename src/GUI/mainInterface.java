@@ -1,8 +1,5 @@
 package GUI;
 
-import GUI.Componenets.*;
-import NonlinearEquations.BroydenMethod;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,7 +17,7 @@ public class mainInterface extends JFrame
         JPanel tab1 = new luLlt();
 
         //second tab
-        JPanel tab2 = new gauss();
+        JPanel tab2 = new gauss_crammer();
 
         //third tab
         JPanel tab3 = new fixedPoint();
@@ -36,6 +33,7 @@ public class mainInterface extends JFrame
 
         //seventh tab
         JPanel tab7= new JacobiGaussSeidel();
+        JPanel tab8 = new RechercheDichotomiqueGui();
 
         //add tabes into the tabbed pane
         tabbedPane.addTab("Gauss/Crammer", tab2);
@@ -45,6 +43,8 @@ public class mainInterface extends JFrame
         tabbedPane.addTab("Newton Raphson", tab4);
         tabbedPane.addTab("Sécante", tab5);
         tabbedPane.addTab("Broyden", tab6);
+        tabbedPane.addTab("Recherche Dichotomique", tab8);
+
 
 
         this.getContentPane().add(tabbedPane, BorderLayout.CENTER);

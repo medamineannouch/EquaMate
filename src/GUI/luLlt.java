@@ -1,8 +1,9 @@
 package GUI;
 
-import GUI.Componenets.matrix;
 import GUI.Componenets.matricesInput;
+import GUI.Componenets.matrix;
 import GUI.Componenets.solutionHeader;
+import Methods.linearSystems.Cholesky;
 import Methods.linearSystems.luDecomposition;
 
 import javax.swing.*;
@@ -21,6 +22,8 @@ public class luLlt extends JPanel
     public JPanel solutionPanel;
     public matrix L, U;
     public JPanel lPanel, uPanel;
+
+    public JComboBox<String> method;
 
     public luLlt()
     {
@@ -65,6 +68,16 @@ public class luLlt extends JPanel
         solutionPanel.add(solutionMatrix);
         this.add(solutionPanel);
 
+        //method chooser
+        JPanel methodList = new JPanel(new FlowLayout());
+        methodList.setPreferredSize(new Dimension(0, 30));
+        methodList.add(new JLabel("Method: "));
+
+        String[] methods = {"LU", "Cholesky"};
+        method = new JComboBox<>(methods);
+        methodList.add(method, BorderLayout.CENTER);
+        //Add Items Selection
+        this.add(methodList);
 
         //solve btn
         JPanel pnl = new JPanel(new FlowLayout());
@@ -81,6 +94,7 @@ public class luLlt extends JPanel
 
         //L & U matrices
         //panel wrapper
+
         JPanel luPanel = new JPanel();
         luPanel.setLayout(new BoxLayout(luPanel, BoxLayout.X_AXIS));
         luPanel.add(new JLabel("L: "));
@@ -91,7 +105,7 @@ public class luLlt extends JPanel
         lPanel.add(L);
         luPanel.add(lPanel);
 
-        luPanel.add(new JLabel("U: "));
+        luPanel.add(new JLabel("U/Lt: "));
 
         uPanel = new JPanel();
         uPanel.setLayout(new BoxLayout(uPanel, BoxLayout.X_AXIS));
@@ -130,12 +144,31 @@ public class luLlt extends JPanel
     {
         try
         {
-            HashMap<String, Object> res = luDecomposition.LU(matricesInput.getA(), matricesInput.getB());
-            solutionMatrix.setValues((double[]) res.get("result"));
+            if(((String)method.getSelectedItem()).equals("LU"))
+            {
+                System.out.println("LU");
+                HashMap<String, Object> res = luDecomposition.LU(matricesInput.getA(), matricesInput.getB());
+                solutionMatrix.setValues((double[]) res.get("result"));
 
-            //set L and U
-            L.fillMatrix((double[][]) res.get("L"));
-            U.fillMatrix((double[][]) res.get("U"));
+                //set L and U
+                L.fillMatrix((double[][]) res.get("L"));
+                U.fillMatrix((double[][]) res.get("U"));
+            }
+            else{
+
+                System.out.println("Cholesky");
+                Cholesky A = new Cholesky(matricesInput.getA().length);
+                A.setMatrix(matricesInput.getA());
+                A.setSecMember(matricesInput.getB());
+                //set solution
+                solutionMatrix.setValues(A.choleskyV2());
+
+                //set L and Lt
+                L.fillMatrix(A.choleskyProcess());
+                U.fillMatrix(A.Ltranspose());
+
+            }
+
         }
         catch(Exception e)
         {

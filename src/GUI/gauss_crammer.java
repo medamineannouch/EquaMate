@@ -2,6 +2,7 @@ package GUI;
 
 import GUI.Componenets.matricesInput;
 import GUI.Componenets.solutionHeader;
+import Methods.linearSystems.Crammer;
 import Methods.linearSystems.gaussianElimination;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class gauss extends JPanel
+public class gauss_crammer extends JPanel
 {
     public matricesInput matricesInput;
     public JPanel matricesContainer; //a wrapper for the above component, used to preserve the old place
@@ -19,9 +20,9 @@ public class gauss extends JPanel
     public JPanel solutionPanel;
     public JComboBox<String> method;
 
-    public gauss()
+    public gauss_crammer()
     {
-        gauss app = this; //pointer for listeners
+        gauss_crammer app = this; //pointer for listeners
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -107,8 +108,13 @@ public class gauss extends JPanel
                 solutionMatrix.setValues(res);
             }
             else
-            {
+            {   // solve AX = B By Crammer Method
                 System.out.println("crammer");
+                Crammer mat = new Crammer(matricesInput.dimension);
+                mat.setMatrix(matricesInput.getA()); // Set A
+                mat.setSecMember(matricesInput.getB()); // Set B
+                double[] res = mat.crammer();
+                solutionMatrix.setValues(res); //release the Result into the GUI
             }
         }
         catch(Exception e)

@@ -1,5 +1,8 @@
 package NonlinearEquations;
 
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -9,6 +12,15 @@ public class RecherchDichotomique {
     private double[] coeff;
     private double borneInf;
     private double borneSup;
+
+    public RecherchDichotomique() {
+    }
+
+    public RecherchDichotomique(double epsilon, double borneInf, double borneSup) {
+        this.epsilon = epsilon;
+        this.borneInf = borneInf;
+        this.borneSup = borneSup;
+    }
 
     public RecherchDichotomique(double epsilon, double[] coeff, double borneInf, double borneSup) {
         this.epsilon = epsilon;
@@ -71,7 +83,7 @@ public class RecherchDichotomique {
         return (borneInf + borneSup) / 2;
     }
 
-    public List<Double> zerosFinder(Function<Double, Double> f){// Error: instablité des resultats
+    public List<Double> zerosFinder(Function<Double, Double> f){// Warning! : instablité des resultats
         List<Double> zeros = new ArrayList<>();
         double x = borneInf;
         while (x <= borneSup){
@@ -83,7 +95,30 @@ public class RecherchDichotomique {
         return zeros;
     }
 
+    public  double dichotomyV2(Expression exp) throws Exception
+    {   double fa = exp.setVariable("x"+1,borneInf).evaluate();
+        double fb = exp.setVariable("x"+1,borneSup).evaluate();
 
+        while (borneSup - borneInf > epsilon) {
+            double mil = (borneInf + borneSup) / 2;
+            double fmil = exp.setVariable("x"+1,mil).evaluate();
+
+            if (fmil == 0) {
+                return mil;
+            } else if (  borneSup <= fmil && fmil >= borneSup - 0.01) {
+                System.out.println("no zero detected");
+                return borneSup;
+            } else if (fmil * fa < 0) {
+                borneSup = mil;
+                fb = fmil;
+            } else {
+                borneInf = mil;
+                fa = fmil;
+            }
+        }
+
+        return (borneInf + borneSup) / 2;
+    }
 
     public double getEpsilon() {
         return epsilon;
@@ -115,5 +150,20 @@ public class RecherchDichotomique {
 
     public void setBorneSup(double borneSup) {
         this.borneSup = borneSup;
+    }
+}
+
+class Main {
+    public static void main(String[] args){
+        Expression expression = new ExpressionBuilder("3+2").build();
+        double result = expression.evaluate();
+        System.out.println(result);
+        Expression expression2 = new ExpressionBuilder("sin(x)*sin(x)+cos(x)*cos(x)")
+                .variables("x")
+                .build()
+                .setVariable("x", 0.5);
+        double result2 = expression2.evaluate();
+        System.out.println(result2);
+
     }
 }

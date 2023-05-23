@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 public class Main_Charaf {
     public Main_Charaf(){
-        testCholesky();
+        testDichotomie();
     }
     public void testCrammer(){
         Crammer A = new Crammer(3);
@@ -33,6 +33,7 @@ public class Main_Charaf {
         A.setMatrix(C);
         A.setSecMember(B);
         A.showMatrix(A.choleskyProcess());
+
         System.out.println(Arrays.toString(A.choleskyV2()));
         // Problems in solving syst and reverse system
 
@@ -44,7 +45,7 @@ public class Main_Charaf {
         R.setEpsilon(0.01);
         //Function<Double, Double> f = x -> Math.pow(x,3) - 3*x + 5;
         Function<Double, Double> f = x -> Math.cos(x) ;
-        System.out.println(R.dichotomy(f));
+        System.out.println(R.dichotomy(f)); // show the value of the root
     }
     public void testNewtonDim1(){
         //Function<Double, Double> f = x -> 3*Math.pow(x,2);
