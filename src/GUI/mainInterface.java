@@ -21,7 +21,7 @@ public class mainInterface extends JFrame
 
 
         // Description label
-        JLabel descriptionLabel2 = new JLabel("Select the System type:");
+        JLabel descriptionLabel2 = new JLabel("Select the type of your system :");
         descriptionLabel2.setFont(new Font("Arial", Font.BOLD, 20));
         GridBagConstraints gbcLabel = new GridBagConstraints();
         gbcLabel.gridx = 0;
