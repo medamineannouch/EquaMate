@@ -11,26 +11,25 @@ public class mainInterface extends JFrame
         setTitle("EquaMate");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Calculate the dimensions based on screen size
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int) (screenSize.width * 0.6);
-        int height = (int) (screenSize.height * 0.6);
-        setBounds((screenSize.width - width) / 2, (screenSize.height - height) / 2, width, height);
+
+        setBounds(200, 50, 900 , 600);
         // Create the main window with description and group buttons
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
 
+
+
         // Description label
-        JLabel descriptionLabel = new JLabel("Select the System type:");
-        descriptionLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        JLabel descriptionLabel2 = new JLabel("Select the System type:");
+        descriptionLabel2.setFont(new Font("Arial", Font.BOLD, 20));
         GridBagConstraints gbcLabel = new GridBagConstraints();
         gbcLabel.gridx = 0;
         gbcLabel.gridy = 0;
         gbcLabel.gridwidth = 2;
         gbcLabel.anchor = GridBagConstraints.CENTER;
         gbcLabel.insets = new Insets(0, 0, 10, 0);
-        mainPanel.add(descriptionLabel, gbcLabel);
+        mainPanel.add(descriptionLabel2, gbcLabel);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -74,17 +73,13 @@ public class mainInterface extends JFrame
     private void openGroupWindow(String groupName) {
         JFrame groupFrame = new JFrame(groupName);
         groupFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        groupFrame.setBounds(200, 200, 500, 200);
 
         tabbedPane = new JTabbedPane();
 
         if (groupName.equals("Linear Systems")) {
-            //first tab
             JPanel tab1 = new luLlt();
 
-            //second tab
             JPanel tab2 = new gauss_crammer();
-            //seventh tab
             JPanel tab7= new JacobiGaussSeidel();
 
             tabbedPane.addTab("Gauss/Crammer", tab2);
@@ -92,16 +87,12 @@ public class mainInterface extends JFrame
             tabbedPane.addTab("Jacobi/Gauss-Seidel", tab7);
 
         } else if (groupName.equals("Non Linear Systems")) {
-            //third tab
             JPanel tab3 = new fixedPoint();
 
-            //fourth tab
             JPanel tab4 = new newtonRaphson();
 
-            //fifth tab
             JPanel tab5 = new secant();
 
-            //sixth tab
             JPanel tab6= new Broyden();
             JPanel tab8 = new RechercheDichotomiqueGui();
 
@@ -113,7 +104,7 @@ public class mainInterface extends JFrame
 
         }
         this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
-        this.setBounds(200, 50, 900 , 600);
+
         this.setVisible(true);
 
         groupFrame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
