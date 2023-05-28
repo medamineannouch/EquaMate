@@ -34,64 +34,37 @@ public class SecantMethod {
 
 
 public class SecantMethod {
-        private final double epsilon; // Convergence criterion
-        private final int maxIterations; // Maximum number of iterations
-        private final Expression[] equations; // Array to store the system of equations
+    private final double epsilon; // Convergence criterion
+    private final int maxIterations; // Maximum number of iterations
+    private final Expression equation; // Equation to solve
 
-        public SecantMethod(Expression[] equations, double epsilon, int maxIterations) {
-            this.equations = equations;
-            this.epsilon = epsilon;
-            this.maxIterations = maxIterations;
-        }
-
-        public double[] solveSystem(double[] initialGuess1, double[] initialGuess2) {
-            int n = equations.length;
-            if (initialGuess1.length != n || initialGuess2.length != n) {
-                throw new IllegalArgumentException("Dimensions of initial guess vectors must match the number of equations.");
-            }
-
-            double[] x = initialGuess1.clone();
-            double[] xPrev = initialGuess2.clone();
-
-            for (int i = 0; i < maxIterations; i++) {
-                double[] dx = new double[n];
-                double[] xNext = x.clone();
-
-                for (int j = 0; j < n; j++) {
-                    Expression equation = equations[j].setVariable("x", x[j]).setVariable("xPrev", xPrev[j]);
-                    dx[j] = equation.evaluate();
-                    xNext[j] = x[j] - dx[j];
-                }
-
-                double maxDeltaX = Math.abs(dx[0]);
-                for (int j = 1; j < n; j++) {
-                    if (Math.abs(dx[j]) > maxDeltaX) {
-                        maxDeltaX = Math.abs(dx[j]);
-                    }
-                }
-
-                if (maxDeltaX < epsilon) {
-                    return xNext;
-                }
-
-                xPrev = x;
-                x = xNext;
-            }
-
-            throw new IllegalStateException("The method did not converge within the maximum number of iterations.");
-        }
-
-
-    private double evaluateEquations(double x) {
-        double result = 0;
-
-        for (Expression equation : equations) {
-            equation.setVariable("x", x);
-            result += equation.evaluate();
-        }
-
-        return result;
+    public SecantMethod(Expression equation, double epsilon, int maxIterations) {
+        this.equation = equation;
+        this.epsilon = epsilon;
+        this.maxIterations = maxIterations;
     }
+
+    public double solveequation(double initialGuess1, double initialGuess2) {
+        double x = initialGuess1;
+        double xPrev = initialGuess2;
+
+        for (int i = 0; i < maxIterations; i++) {
+            double dx = equation.setVariable("x", x).evaluate();
+            double xNext = x - dx;
+
+            if (Math.abs(dx) < epsilon) {
+                return xNext;
+            }
+
+            xPrev = x;
+            x = xNext;
+        }
+
+        throw new IllegalStateException("The method did not converge within the maximum number of iterations.");
+    }
+
+
+
 }
 
 
