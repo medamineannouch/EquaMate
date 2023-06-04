@@ -44,23 +44,16 @@ public class SecantMethod {
         this.maxIterations = maxIterations;
     }
 
-    public double solveequation(double initialGuess1, double initialGuess2) {
-        double x = initialGuess1;
-        double xPrev = initialGuess2;
+    public static double solve(Expression expression, double x0, double x1, int iteration, double error) throws Exception {
+        if (iteration == 0) return x1;
 
-        for (int i = 0; i < maxIterations; i++) {
-            double dx = equation.setVariable("x", x).evaluate();
-            double xNext = x - dx;
+        double fx1 = expression.setVariable("x", x1).evaluate();
+        double fx0 = expression.setVariable("x", x0).evaluate();
 
-            if (Math.abs(dx) < epsilon) {
-                return xNext;
-            }
-
-            xPrev = x;
-            x = xNext;
-        }
-
-        throw new IllegalStateException("The method did not converge within the maximum number of iterations.");
+        double x2 = x1 - (fx1 * (x1 - x0)) / (fx1 - fx0);
+        if (Math.abs(x1 - x2) <= error) return x2;
+        else if (iteration == 1) throw new Exception("Secant doesn't converge");
+        else return solve(expression, x1, x2, iteration - 1, error);
     }
 
 

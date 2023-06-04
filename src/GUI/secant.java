@@ -119,10 +119,9 @@ public class secant extends JPanel
             iterations = (int) this.iterations.getValue();
             try
             {
-                SecantMethod secantMethod = new SecantMethod(expression[0], error, iterations);
                 double[] solution = new double[1];
 
-                solution[0] = secantMethod.solveequation(initialGuess1[0], initialGuess2[0]);
+                solution[0] = SecantMethod.solve(expression[0],initialGuess1[0], initialGuess2[0],iterations,error);
 
                 this.solution.setValues(solution);
             }
