@@ -34,15 +34,7 @@ public class SecantMethod {
 
 
 public class SecantMethod {
-    private final double epsilon; // Convergence criterion
-    private final int maxIterations; // Maximum number of iterations
-    private final Expression equation; // Equation to solve
 
-    public SecantMethod(Expression equation, double epsilon, int maxIterations) {
-        this.equation = equation;
-        this.epsilon = epsilon;
-        this.maxIterations = maxIterations;
-    }
 
     public static double solve(Expression expression, double x0, double x1, int iteration, double error) throws Exception {
         if (iteration == 0) return x1;

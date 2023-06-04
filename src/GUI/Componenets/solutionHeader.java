@@ -38,10 +38,13 @@ public class solutionHeader extends JPanel
         }
     }
 
+
     public double[] getValues()
     {
         double[] res = new double[dimension];
         for(int i=0; i<dimension; i++) res[i] = Double.parseDouble(solutionMatrix[i].getText());
         return res;
     }
+
+
 }

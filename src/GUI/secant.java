@@ -42,7 +42,7 @@ public class secant extends JPanel
 
 
         solutionHeaderPanel1 = new JPanel();
-        solutionHeaderPanel2.setLayout(new BoxLayout(solutionHeaderPanel1, BoxLayout.X_AXIS));
+        solutionHeaderPanel1.setLayout(new BoxLayout(solutionHeaderPanel1, BoxLayout.X_AXIS));
         initialSolutionHeader1 = new solutionHeader(1, true, "Initial solution 1 : ");
         solutionHeaderPanel1.add(initialSolutionHeader1);
 
